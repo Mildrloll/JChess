@@ -46,6 +46,11 @@ public class King extends Piece {
     }
 
     @Override
+    public King movePiece(final Move move) {
+        return new King(move.getMovedPiece().getPieceAlliance(), move.getDestinationCoordinate());
+    }
+
+    @Override
     public String toString() {
         return PieceType.KING.toString();
     }
