@@ -15,7 +15,7 @@ import static com.chess.gui.Table.*;
 public class GameHistoryPanel extends JLabel {
     private final DataModel model;
     private final JScrollPane scrollPane;
-    private static final Dimension HISTORY_PANEL_DIMENSION = new Dimension(100, 200);
+    private static final Dimension HISTORY_PANEL_DIMENSION = new Dimension(100, 400);
 
     GameHistoryPanel() {
         this.setLayout(new BorderLayout());
@@ -45,6 +45,8 @@ public class GameHistoryPanel extends JLabel {
             final Move lastMove = moveHistory.getMoves().get(moveHistory.size() - 1);
             final String moveText = lastMove.toString();
             if (lastMove.getMovedPiece().getPieceAlliance().isWhite()) {
+                this.model.setValueAt(moveText + calculateCheckAndCheckMateHash(board), currentRow, 0);
+            } else if (lastMove.getMovedPiece().getPieceAlliance().isBlack()) {
                 this.model.setValueAt(moveText + calculateCheckAndCheckMateHash(board), currentRow - 1, 1);
             }
         }
@@ -109,6 +111,7 @@ public class GameHistoryPanel extends JLabel {
             }
             if (column == 0) {
                 currentRow.setWhiteMove((String) aValue);
+                fireTableRowsInserted(row, row);
             } else if (column == 1) {
                 currentRow.setBlackMove((String) aValue);
                 fireTableCellUpdated(row, column);
