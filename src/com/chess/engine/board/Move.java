@@ -196,8 +196,7 @@ public abstract class Move {
 
         @Override
         public String toString() {
-            ///return BoardUtils.getCoordinateAtPosition(this.destinationCoordinate);
-            return null;
+            return BoardUtils.getPositionAtCoordinate(this.destinationCoordinate);
         }
     }
 

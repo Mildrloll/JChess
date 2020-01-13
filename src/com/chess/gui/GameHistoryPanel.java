@@ -12,7 +12,7 @@ import java.util.List;
 
 import static com.chess.gui.Table.*;
 
-public class GameHistoryPanel extends JLabel {
+public class GameHistoryPanel extends JPanel {
     private final DataModel model;
     private final JScrollPane scrollPane;
     private static final Dimension HISTORY_PANEL_DIMENSION = new Dimension(100, 400);
@@ -55,9 +55,9 @@ public class GameHistoryPanel extends JLabel {
     }
 
     private String calculateCheckAndCheckMateHash(final Board board) {
-        if (board.currentPlayer().isCheckMate()) {
+        if (board.currentPlayer().isInCheckMate()) {
             return "#";
-        } else if (board.currentPlayer().isCheck()) {
+        } else if (board.currentPlayer().isInCheck()) {
             return "+";
         }
         return "";

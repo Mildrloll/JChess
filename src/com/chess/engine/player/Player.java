@@ -56,11 +56,11 @@ public abstract class Player {
         return this.legalMoves.contains(move);
     }
 
-    public boolean isCheck() {
+    public boolean isInCheck() {
         return this.isInCheck;
     }
 
-    public boolean isCheckMate() {
+    public boolean isInCheckMate() {
         return this.isInCheck && !hasEscapeMoves();
     }
 
