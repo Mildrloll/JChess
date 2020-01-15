@@ -18,11 +18,11 @@ public class Queen extends Piece {
     private final static int[] CANDIDATE_MOVE_VECTOR_COORDINATE = {-9, -8, -7, -1, 1, 7, 8, 9};
 
     public Queen(final Alliance pieceAlliance, final int piecePosition) {
-        super(PieceType.QUEEN, piecePosition, pieceAlliance, true);
+        super(PieceType.QUEEN, pieceAlliance, piecePosition, true);
     }
 
     public Queen(final Alliance pieceAlliance, final int piecePosition, final boolean isFirstMove) {
-        super(PieceType.QUEEN, piecePosition, pieceAlliance, isFirstMove);
+        super(PieceType.QUEEN, pieceAlliance, piecePosition, isFirstMove);
     }
 
     @Override
@@ -52,6 +52,11 @@ public class Queen extends Piece {
             }
         }
         return ImmutableList.copyOf(legalMoves);
+    }
+
+    @Override
+    public int locationBonus() {
+        return this.pieceAlliance.queenBonus(this.piecePosition);
     }
 
     @Override

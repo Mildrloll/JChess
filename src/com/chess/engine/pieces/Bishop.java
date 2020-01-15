@@ -4,7 +4,6 @@ import com.chess.engine.Alliance;
 import com.chess.engine.board.Board;
 import com.chess.engine.board.BoardUtils;
 import com.chess.engine.board.Move;
-import com.chess.engine.board.Move.AttackMove;
 import com.chess.engine.board.Move.MajorAttackMove;
 import com.chess.engine.board.Move.MajorMove;
 import com.chess.engine.board.Tile;
@@ -18,11 +17,11 @@ public class Bishop extends Piece {
     private final static int[] CANDIDATE_MOVE_VECTOR_COORDINATE = {-9, -7, 7, 9};
 
     public Bishop(final Alliance pieceAlliance, final int piecePosition) {
-        super(PieceType.BISHOP, piecePosition, pieceAlliance, true);
+        super(PieceType.BISHOP, pieceAlliance, piecePosition, true);
     }
 
     public Bishop(final Alliance pieceAlliance, final int piecePosition, final boolean isFirstMove) {
-        super(PieceType.BISHOP, piecePosition, pieceAlliance, isFirstMove);
+        super(PieceType.BISHOP, pieceAlliance, piecePosition, isFirstMove);
     }
 
     @Override
@@ -53,7 +52,10 @@ public class Bishop extends Piece {
         }
         return ImmutableList.copyOf(legalMoves);
     }
-
+    @Override
+    public int locationBonus(){
+        return this.pieceAlliance.bishopBonus(this.piecePosition);
+    }
     @Override
     public Bishop movePiece(final Move move) {
         return new Bishop(move.getMovedPiece().getPieceAlliance(), move.getDestinationCoordinate());

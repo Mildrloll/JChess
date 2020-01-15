@@ -7,6 +7,7 @@ import com.chess.engine.board.Tile;
 import com.chess.engine.pieces.Piece;
 import com.chess.engine.player.MoveTransition;
 import com.google.common.collect.Lists;
+import javafx.beans.Observable;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -44,6 +45,7 @@ public class Table {
     private static String defaultPieceImagesPath = "art/pieces/plain/";
     private final Color lightTileColor = Color.decode("#FFFACD");
     private final Color darkTileColor = Color.decode("#593E1A");
+    private static final Table INSTANCE = new Table();
 
     public Table() {
         this.gameFrame = new JFrame("JChess");
@@ -62,6 +64,10 @@ public class Table {
         this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
         this.gameFrame.add(this.gameHistoryPanel, BorderLayout.EAST);
         this.gameFrame.setVisible(true);
+    }
+
+    public static Table get() {
+        return INSTANCE;
     }
 
     private JMenuBar createTableMenuBar() {
