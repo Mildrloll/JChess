@@ -7,19 +7,19 @@ import com.chess.engine.board.Move;
 import java.util.Collection;
 
 public abstract class Piece {
-    protected final PieceType pieceType;
-    protected final Alliance pieceAlliance;
-    protected final int piecePosition;
-    protected final boolean isFirstMove;
+    final PieceType pieceType;
+    final Alliance pieceAlliance;
+    final int piecePosition;
+    private final boolean isFirstMove;
     private final int cachedHashCode;
 
-    Piece(final PieceType pieceType,
-          final Alliance pieceAlliance,
+    Piece(final PieceType type,
+          final Alliance alliance,
           final int piecePosition,
           final boolean isFirstMove) {
-        this.pieceType = pieceType;
+        this.pieceType = type;
         this.piecePosition = piecePosition;
-        this.pieceAlliance = pieceAlliance;
+        this.pieceAlliance = alliance;
         this.isFirstMove = isFirstMove;
         this.cachedHashCode = computeHashCode();
     }
@@ -59,8 +59,8 @@ public abstract class Piece {
             return false;
         }
         final Piece otherPiece = (Piece) other;
-        return this.piecePosition == otherPiece.getPiecePosition() && this.pieceType == otherPiece.pieceType &&
-                this.pieceAlliance == otherPiece.getPieceAlliance() && this.isFirstMove == otherPiece.isFirstMove();
+        return this.piecePosition == otherPiece.piecePosition && this.pieceType == otherPiece.pieceType &&
+                this.pieceAlliance == otherPiece.pieceAlliance && this.isFirstMove == otherPiece.isFirstMove;
     }
 
     @Override
@@ -98,7 +98,7 @@ public abstract class Piece {
                 return false;
             }
         },
-        KNIGHT(300, "N") {
+        KNIGHT(320, "N") {
             @Override
             public boolean isPawn() {
                 return false;
@@ -119,7 +119,7 @@ public abstract class Piece {
                 return false;
             }
         },
-        BISHOP(300, "B") {
+        BISHOP(350, "B") {
             @Override
             public boolean isPawn() {
                 return false;
@@ -182,7 +182,7 @@ public abstract class Piece {
                 return false;
             }
         },
-        KING(10000, "K") {
+        KING(20000, "K") {
             @Override
             public boolean isPawn() {
                 return false;
@@ -203,11 +203,11 @@ public abstract class Piece {
                 return true;
             }
         };
-        private int pieceValue;
-        private String pieceName;
+        private final int value;
+        private final String pieceName;
 
         public int getPieceValue() {
-            return this.pieceValue;
+            return this.value;
         }
 
         @Override
@@ -215,9 +215,9 @@ public abstract class Piece {
             return this.pieceName;
         }
 
-        PieceType(final int pieceValue,
+        PieceType(final int val,
                   final String pieceName) {
-            this.pieceValue = pieceValue;
+            this.value = val;
             this.pieceName = pieceName;
         }
 

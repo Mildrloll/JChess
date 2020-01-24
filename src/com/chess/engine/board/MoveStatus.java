@@ -1,4 +1,4 @@
-package com.chess.engine.player;
+package com.chess.engine.board;
 
 public enum MoveStatus {
     DONE {
@@ -13,7 +13,7 @@ public enum MoveStatus {
             return false;
         }
     },
-    LEAVE_PLAYER_IN_CHECK {
+    LEAVES_PLAYER_IN_CHECK {
         @Override
         public boolean isDone() {
             return false;

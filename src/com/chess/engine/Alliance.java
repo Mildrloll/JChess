@@ -29,7 +29,7 @@ public enum Alliance {
 
         @Override
         public boolean isPawnPromotionSquare(int position) {
-            return BoardUtils.EIGHTH_RANK[position];
+            return BoardUtils.INSTANCE.FIRST_ROW.get(position);
         }
 
         @Override
@@ -46,22 +46,27 @@ public enum Alliance {
         public int pawnBonus(final int position) {
             return WHITE_PAWN_PREFERRED_COORDINATES[position];
         }
+
         @Override
         public int knightBonus(final int position) {
             return WHITE_KNIGHT_PREFERRED_COORDINATES[position];
         }
+
         @Override
         public int bishopBonus(final int position) {
             return WHITE_BISHOP_PREFERRED_COORDINATES[position];
         }
+
         @Override
         public int rookBonus(final int position) {
             return WHITE_ROOK_PREFERRED_COORDINATES[position];
         }
+
         @Override
         public int queenBonus(final int position) {
             return WHITE_QUEEN_PREFERRED_COORDINATES[position];
         }
+
         @Override
         public int kingBonus(final int position) {
             return WHITE_KING_PREFERRED_COORDINATES[position];
@@ -90,7 +95,7 @@ public enum Alliance {
 
         @Override
         public boolean isPawnPromotionSquare(int position) {
-            return BoardUtils.FIRST_RANK[position];
+            return BoardUtils.INSTANCE.EIGHTH_ROW.get(position);
         }
 
         @Override
@@ -107,22 +112,27 @@ public enum Alliance {
         public int pawnBonus(final int position) {
             return BLACK_PAWN_PREFERRED_COORDINATES[position];
         }
+
         @Override
         public int knightBonus(final int position) {
             return BLACK_KNIGHT_PREFERRED_COORDINATES[position];
         }
+
         @Override
         public int bishopBonus(final int position) {
             return BLACK_BISHOP_PREFERRED_COORDINATES[position];
         }
+
         @Override
         public int rookBonus(final int position) {
             return BLACK_ROOK_PREFERRED_COORDINATES[position];
         }
+
         @Override
         public int queenBonus(final int position) {
             return BLACK_QUEEN_PREFERRED_COORDINATES[position];
         }
+
         @Override
         public int kingBonus(final int position) {
             return BLACK_KING_PREFERRED_COORDINATES[position];

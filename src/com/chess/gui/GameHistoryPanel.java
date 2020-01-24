@@ -63,6 +63,31 @@ public class GameHistoryPanel extends JPanel {
         return "";
     }
 
+    private static class Row {
+        private String whiteMove;
+        private String blackMove;
+
+        Row() {
+
+        }
+
+        public String getWhiteMove() {
+            return this.whiteMove;
+        }
+
+        public String getBlackMove() {
+            return this.blackMove;
+        }
+
+        public void setWhiteMove(final String move) {
+            this.whiteMove = move;
+        }
+
+        public void setBlackMove(final String move) {
+            this.blackMove = move;
+        }
+    }
+
     private static class DataModel extends DefaultTableModel {
         private final List<Row> values;
         private static final String[] NAMES = {"White", "Black"};
@@ -126,31 +151,6 @@ public class GameHistoryPanel extends JPanel {
         @Override
         public String getColumnName(final int column) {
             return NAMES[column];
-        }
-    }
-
-    private static class Row {
-        private String whiteMove;
-        private String blackMove;
-
-        Row() {
-
-        }
-
-        public String getWhiteMove() {
-            return this.whiteMove;
-        }
-
-        public String getBlackMove() {
-            return this.blackMove;
-        }
-
-        public void setWhiteMove(final String move) {
-            this.whiteMove = move;
-        }
-
-        public void setBlackMove(final String move) {
-            this.blackMove = move;
         }
     }
 }

@@ -6,7 +6,6 @@ import com.chess.engine.board.BoardUtils;
 import com.chess.engine.board.Move;
 import com.chess.engine.board.Move.MajorAttackMove;
 import com.chess.engine.board.Move.MajorMove;
-import com.chess.engine.board.Tile;
 import com.google.common.collect.ImmutableList;
 
 import java.util.ArrayList;
@@ -57,20 +56,20 @@ public class King extends Piece {
     public Collection<Move> calculateLegalMoves(Board board) {
         final List<Move> legalMoves = new ArrayList<>();
         for (final int currentCandidateOffset : CANDIDATE_MOVE_COORDINATE) {
-            final int candidateDestinationCoordinate = this.piecePosition + currentCandidateOffset;
             if (isFirstColumnExclusion(this.piecePosition, currentCandidateOffset) ||
                     isEighthColumnExclusion(this.piecePosition, currentCandidateOffset)) {
                 continue;
             }
+            final int candidateDestinationCoordinate = this.piecePosition + currentCandidateOffset;
             if (BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)) {
-                final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
-                if (!candidateDestinationTile.isTileOccupied()) {
+                final Piece pieceAtDestination = board.getPiece(candidateDestinationCoordinate);
+                if (pieceAtDestination == null) {
                     legalMoves.add(new MajorMove(board, this, candidateDestinationCoordinate));
                 } else {
-                    final Piece pieceAtDestination = candidateDestinationTile.getPiece();
-                    final Alliance pieceAlliance = pieceAtDestination.getPieceAlliance();
-                    if (this.pieceAlliance != pieceAlliance) {
-                        legalMoves.add(new MajorAttackMove(board, this, candidateDestinationCoordinate, pieceAtDestination));
+                    final Alliance pieceAtDestinationAlliance = pieceAtDestination.getPieceAlliance();
+                    if (this.pieceAlliance != pieceAtDestinationAlliance) {
+                        legalMoves.add(new MajorAttackMove(board, this, candidateDestinationCoordinate,
+                                pieceAtDestination));
                     }
                 }
             }
@@ -80,7 +79,7 @@ public class King extends Piece {
 
     @Override
     public String toString() {
-        return PieceType.KING.toString();
+        return this.pieceType.toString();
     }
 
     @Override
@@ -90,7 +89,7 @@ public class King extends Piece {
 
     @Override
     public King movePiece(final Move move) {
-        return new King(move.getMovedPiece().getPieceAlliance(), move.getDestinationCoordinate(), false, move.isCastlingMove(), false, false);
+        return new King(this.pieceAlliance, move.getDestinationCoordinate(), false, move.isCastlingMove(), false, false);
     }
 
     @Override
@@ -113,13 +112,15 @@ public class King extends Piece {
         return (31 * super.hashCode()) + (isCastled ? 1 : 0);
     }
 
-    private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset) {
-        return BoardUtils.FIRST_COLUMN[currentPosition] && (candidateOffset == -9 || candidateOffset == -1 ||
-                candidateOffset == 7);
+    private static boolean isFirstColumnExclusion(final int currentCandidate,
+                                                  final int candidateDestinationCoordinate) {
+        return BoardUtils.INSTANCE.FIRST_COLUMN.get(currentCandidate) && (candidateDestinationCoordinate == -9 || candidateDestinationCoordinate == -1 ||
+                candidateDestinationCoordinate == 7);
     }
 
-    private static boolean isEighthColumnExclusion(final int currentPosition, final int candidateOffset) {
-        return BoardUtils.EIGHTH_COLUMN[currentPosition] && (candidateOffset == -7 || candidateOffset == 1 ||
-                candidateOffset == 9);
+    private static boolean isEighthColumnExclusion(final int currentCandidate,
+                                                   final int candidateDestinationCoordinate) {
+        return BoardUtils.INSTANCE.EIGHTH_COLUMN.get(currentCandidate) && (candidateDestinationCoordinate == -7 || candidateDestinationCoordinate == 1 ||
+                candidateDestinationCoordinate == 9);
     }
 }
